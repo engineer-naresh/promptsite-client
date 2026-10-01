@@ -5,6 +5,7 @@ import type { Project } from '../types';
 import { Loader2Icon, PlusIcon, TrashIcon } from 'lucide-react';
 import {useNavigate } from 'react-router-dom';
 import { dummyProjects } from '../assets/assets';
+import Footer from '../components/Footer';
 const MyProjects = () => {
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -63,6 +64,7 @@ const MyProjects = () => {
           <button onClick={()=>{navigate('/')}} className='flex items-center gap-2 text-white px-3 sm:px-6 py-1 sm:py-2 rounded bg-linear-to-br from indigo-500 to-indigo-600  scale-0 hover:opacity-90 active:scale-95 transition-all'><PlusIcon size={18}/>Create New</button>
         </div>)}
       </div>
+      <Footer/>
     </>
   )
 }
