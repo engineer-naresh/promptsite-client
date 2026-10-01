@@ -7,8 +7,10 @@ import MyProjects from './pages/MyProjects'
 import Community from './pages/Community'
 import Preview from './pages/Preview'
 import View from './pages/View'
+import Navbar from './components/Navbar'
 const App = () => {
   return <>
+  <Navbar />
   <Routes>
      <Route path="/" element={<Home />} />
      <Route path="/pricing" element={<Pricing />} />
