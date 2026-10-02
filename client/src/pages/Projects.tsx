@@ -13,18 +13,29 @@ const Projects = () => {
   const [device, setDevice] = useState<'phone' | 'tablet' | 'desktop'>('desktop');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  const fetchProject = async () => {
+    const project = dummyProjects.find((item) => item.id === projectId)
+    setTimeout(() => {
+      if (project) {
+        setProject({ ...project, conversation: dummyConversations }),
+          setLoading(false);
+        setIsGenerating(project.current_code ? false : true)
+      }
+
+    }, 2000);
+  }
+  const saveProject = async () => { }
+  const downloadCode = () => {
+
+  }
+  const togglePublish = async () => {
+
+  }
+
   useEffect(() => {
-    const fetchedProject = dummyProjects.find((item) => item.id === projectId)
-
-    if (fetchedProject) {
-      setProject({ ...fetchedProject, conversation: dummyConversations })
-      setIsGenerating(!fetchedProject.current_code)
-    } else {
-      setProject(null)
-    }
-
-    setLoading(false)
-  }, [projectId])
+    fetchProject()
+  }, [])
   if (loading) {
     return (
       <>
@@ -57,15 +68,21 @@ const Projects = () => {
         </div>
         {/* right-sidebar */}
         <div className="flex items-center justify-end gap-3 flex-1 text-xs sm:text-sm">
-          <button>
-           <SaveIcon size={16}/> Save
+          <button onClick={saveProject} disabled={isSaving} className='max-sm:hidden bg-gray-800 hover:bg-gray-700 text-white px-3.5 py-1 flex items-center gap-2 rounded sm:rounded-sm transition-colors border border-gray-700'>
+            {isSaving ? <Loader2Icon className='animated-spin' size={16} /> : <SaveIcon size={16} />}
+            Save
           </button>
-          <Link target="_blank" to={`/preview/${projectId}`}>
-          <FullscreenIcon size={16}/> Preview
+          <Link to={`/preview/${projectId}`} target="_blank" className='flex items-center gap-2 px-4 py-1 rounded sm:rounded-sm border border-gray-700 hover:border-gray-500 transition-colors'>
+            <FullscreenIcon size={16} /> Preview
           </Link>
-          <button><ArrowBigDownDashIcon size={16}/> Download</button>
-          <button>{project.isPublished?<EyeOffIcon size={16}/> : <EyeIcon size={16}/> }{project.isPublished?"unpublish":"publish"}</button>
-        </div>
+          <button onClick={downloadCode} className='bg-linear-to-br from-blue-700 to-blue-600 hover:from-blue-600 hover:to-blue-500 text-white px-3.5 py-1 flex items-center gap-2 rounded sm:rounded-sm transition-colors'><ArrowBigDownDashIcon size={16} /> Download</button>
+          <button onClick={togglePublish} className='bg-linear-to-br from-indigo-700 to-indigo-600 hover:from-indigo-600 hover:to-indigo-500 text-white px-3.5 py-1 flex items-center gap-2 rounded sm:rounded-sm transition-colors'>{project.isPublished ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}{project.isPublished ? "unpublish" : "publish"}</button>
+        </div> 
+      </div>
+      <div className='flex-1 flex overflow-auto'>
+        {/* left-sidebar */}
+        <div>Sidebar</div>
+        <div className='flex-1 flex justify-center items-center'>Main Content</div>
       </div>
     </div>
   ) : (
