@@ -84,7 +84,7 @@ const previewRef = useRef<ProjectPreviewRef>(null);
       <div className='flex-1 flex overflow-auto'>
         {/* left-sidebar */}
         <Sidebar isMenuOpen={isMenuOpen} project={project} setProject={(p)=>setProject(p)} isGenerating={isGenerating} setIsGenerating={setIsGenerating} />
-        <div className='flex-1 flex justify-center items-center'><ProjectPreview ref={previewRef} project={project} isGenerating={isGenerating} device={device} showEditorPanel={false}/></div>
+        <div className='flex-1 flex justify-center items-center'><ProjectPreview ref={previewRef} project={project} isGenerating={isGenerating} device={device} showEditorPanel={true} /></div>
       </div>
     </div>
   ) : (
