@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Project } from '../types';
 import { iframeScript } from '../assets/assets';
 import EditorPanel from './EditorPanel';
@@ -24,6 +24,27 @@ const ProjectPreview =forwardRef<ProjectPreviewRef, ProjectPreviewProps>(({proje
     tablet: 'w-[768px]',
     desktop: 'w-full'
   }
+  useImperativeHandle(ref,()=>({
+    getCode:()=>{
+      const doc= iframeRef.current?.contentDocument;
+      if(!doc)return undefined;
+      // Removing classes boundar
+      doc.querySelectorAll('.ai-selected-element,[data-ai-selected]').forEach((el)=>{
+        el.classList.remove('ai-selected-element');
+        el.removeAttribute('data-ai-selected');
+        (el as HTMLElement).style.outline= '';
+
+      })
+      // Remove style and script from document
+      const previewStyle= doc.getElementById('ai-preview-style');
+      if(previewStyle) previewStyle.remove();
+      const previewScript = doc.getElementById('ai-preview-script');
+      if(previewScript) previewScript.remove()
+        // serialize clean html
+      const html = doc.documentElement.outerHTML;
+      return html;
+    }
+  }))
   useEffect(()=>{
     const handleMessage = (event:MessageEvent)=>{
       if(event.data.type==='ELEMENT_SELECTED'){

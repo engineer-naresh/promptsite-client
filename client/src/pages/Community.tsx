@@ -31,7 +31,7 @@ const Community = () => {
           <div className='flex flex-wrap gap-3.5'>
           {projects.map((project) => (
             // min-desktop-preview
-            <Link to={`/projects/${project.id}`} key={project.id} className='w-72 max-sm:mx-auto cursor-pointer bg-gray-900/60 border broder-gray-700 rounded-lg overflow-hidden shadow-md group  hover:border-indigo-800/80 transition-all duration-300'>
+            <Link to={`/view/${project.id}`} key={project.id} className='w-72 max-sm:mx-auto cursor-pointer bg-gray-900/60 border broder-gray-700 rounded-lg overflow-hidden shadow-md group  hover:border-indigo-800/80 transition-all duration-300'>
               <div className='relative w-full h-40 bg-gray-900 overflow-hidden border-b border-gray-800'>
                 {project.current_code?(<iframe srcDoc={project.current_code} className='absolute top-0 left-0 w-300 h-200 origin-top-left pointer-events-none' sandbox="allow-scripts allow-same-origin" style={{transform:'scale(0.25)'}}/>): (<div className="flex items-center justify-center h-full text-gray-500"><p>No Preview</p></div>) }                
               </div>
